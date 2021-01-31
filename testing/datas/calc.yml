@@ -3,11 +3,12 @@ add:
   datas:
     - [1, 2, 3]
     - [1000, 1, 1001]
-    - [1.22, 3.54, 4.76]
+    - [0.1, 0.2, 0.3]
     - [0, 1, 1]
-  ids: [int, max, float, micro]
+  ids: [int, max, error_float, micro]
 div:
   datas:
     - [1, 1, 1]
     - [100, 4, 25]
-    - [14, 2, 6]
+    - [14, 0, 6]
+  ids: [int, max, error_int]

@@ -10,15 +10,18 @@ from pythoncode.Calculator import Calculator
 
 
 # 获取yaml文件参数
-def get_datas():
+def get_datas(name):
     with open("./datas/calc.yml") as f:
-        datas = yaml.safe_load(f)
-    return (datas['add']['datas'], datas['add']['ids'], datas['div']['datas'])
+        all_datas = yaml.safe_load(f)
+    datas = all_datas[name]['datas']
+    ids = all_datas[name]['ids']
+    return (datas, ids)
 
 
 # 测试类
 class TestCalc:
-    datas: list = get_datas()
+    add_int_data = get_datas('add')
+    div_int_data = get_datas('div')
 
     # 前置条件
     def setup_class(self):
@@ -30,10 +33,14 @@ class TestCalc:
         print("计算结束")
 
     # 装饰器
-    @pytest.mark.parametrize("a, b, result", datas[0], ids=datas[1])
+    @pytest.mark.parametrize("a, b, result", add_int_data[0], ids=add_int_data[1])
     def test_add(self, a, b, result):
-        assert result == self.calc.add(a, b)
+        assert result == round(self.calc.add(a, b), 2)
 
-    @pytest.mark.parametrize("x, y, result", datas[2])
+    @pytest.mark.parametrize("x, y, result", div_int_data[0], ids=div_int_data[1])
     def test_div(self, x, y, result):
-        assert result == self.calc.divider(x, y)
+        if y == 0:
+            with pytest.raises(ZeroDivisionError):
+                assert result == self.calc.divider(x, y)
+        else:
+            assert result == self.calc.divider(x, y)
