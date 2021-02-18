@@ -11,4 +11,4 @@ div:
     - [1, 1, 1]
     - [100, 4, 25]
     - [14, 0, 6]
-  ids: [int, max, error_int]
+  ids: ['小数值', '大数值', error_int]
